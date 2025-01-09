@@ -1,0 +1,4 @@
+.main::-webkit-scrollbar {
+  display: none; /* Ẩn scrollbar trên Chrome, Safari */
+  background-color: black;
+}
