@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import * as apis from "../apis";
 import icons from "../Ultis/icon";
@@ -17,14 +17,24 @@ const {
 function Player() {
   const { curSongID } = useSelector((state) => state.music);
   const [songInfo, setSongInfo] = useState(null);
-  console.log(curSongID);
+  const [song, setSong] = useState(null);
+  const audioRef = useRef(null);
+  const playAudio = () => {
+    audioRef.current.play();
+    console.log("klien");
+  };
   useEffect(() => {
     const fetchSetailSong = async () => {
-      const song = await apis.ApiGetDetailSong("/infosong", { id: curSongID });
-      console.log(song);
-      setSongInfo(song.data);
+      const songInfo = await apis.ApiGetDetailSong("/infosong", {
+        id: curSongID,
+      });
+      const song = await apis.apiGetSong("/song", { id: curSongID });
+
+      setSongInfo(songInfo?.data);
+      setSong(song?.data);
     };
     fetchSetailSong();
+    playAudio();
   }, [curSongID]);
   return (
     <div className="bg-white w-full h-full border border-solid flex items-center border-boderPlayer px-[20px]">
@@ -52,6 +62,7 @@ function Player() {
         </div>
       </div>
       <div className="grow h-full flex flex-col justify-center items-center gap-4">
+        <audio ref={audioRef} src={song?.["128"]} />
         <div className="flex flex-row gap-8 justify-center items-center">
           <span>
             <CiShuffle size={24} />
@@ -60,7 +71,7 @@ function Player() {
             <IoMdSkipForward size={24} />
           </span>
           <span className="p-2 border border-black rounded-full">
-            <FaPlay size={18} />
+            <FaPlay size={18} onClick={playAudio} />
           </span>
           <span>
             <IoMdSkipForward size={24} />

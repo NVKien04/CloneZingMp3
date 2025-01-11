@@ -8,6 +8,7 @@ import { CiHeart } from "react-icons/ci";
 import { BsThreeDots } from "react-icons/bs";
 import { TbSwitchVertical } from "react-icons/tb";
 import { CiMusicNote1 } from "react-icons/ci";
+import { BsDot } from "react-icons/bs";
 const icons = {
   FaPlay,
   FaPause,
@@ -19,5 +20,6 @@ const icons = {
   BsThreeDots,
   TbSwitchVertical,
   CiMusicNote1,
+  BsDot,
 };
 export default icons;

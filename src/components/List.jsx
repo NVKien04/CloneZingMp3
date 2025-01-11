@@ -1,11 +1,20 @@
 import moment from "moment";
 import icons from "../Ultis/icon";
+import { useDispatch } from "react-redux";
+import * as actions from "../store/actions";
 
 const { CiMusicNote1 } = icons;
 function List({ song }) {
-  console.log(song);
+  const dispatch = useDispatch();
+  const handleClickSong = () => {
+    dispatch(actions.setCurSongID(song?.encodeId));
+  };
   return (
-    <div className="flex border-b border-solid border-boderPlayer hover:bg-alphaBg rounded-[5px] w-full items-center p-[10px]">
+    <div
+      className="flex border-b border-solid border-boderPlayer hover:bg-alphaBg rounded-[5px] w-full items-center p-[10px]"
+      onClick={handleClickSong}
+      key={song?.encodeId}
+    >
       <div className="w-[50%] flex  text-left mr-[10px] items-center  gap-3">
         <span>
           <CiMusicNote1 />
