@@ -9,6 +9,9 @@ import { BsThreeDots } from "react-icons/bs";
 import { TbSwitchVertical } from "react-icons/tb";
 import { CiMusicNote1 } from "react-icons/ci";
 import { BsDot } from "react-icons/bs";
+import { FaAngleRight } from "react-icons/fa6";
+import { LuListMusic } from "react-icons/lu";
+import { RiDeleteBinLine } from "react-icons/ri";
 const icons = {
   FaPlay,
   FaPause,
@@ -21,5 +24,8 @@ const icons = {
   TbSwitchVertical,
   CiMusicNote1,
   BsDot,
+  FaAngleRight,
+  LuListMusic,
+  RiDeleteBinLine,
 };
 export default icons;

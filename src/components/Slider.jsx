@@ -10,11 +10,10 @@ function Slider() {
 
   useEffect(() => {
     const sliderItem = document.getElementsByClassName("slider-item");
-    console.log(sliderItem);
     let first = 0;
     const interValid = setInterval(() => {
-      if (sliderItem.length > 1) {
-        for (let i = 0; i < sliderItem.length; i++) {
+      if (sliderItem?.length > 1) {
+        for (let i = 0; i < sliderItem?.length; i++) {
           if (i === first) {
             sliderItem[i].style.cssText = `display:block`;
           } else {
@@ -23,7 +22,7 @@ function Slider() {
         }
         sliderItem[first].classList.add("animate-slide-left");
         first += 1;
-        if (first > 2) {
+        if (first > sliderItem.length - 1) {
           first = 0;
         }
       }
@@ -36,6 +35,8 @@ function Slider() {
   const handleClickBanner = (item) => {
     if (item?.type === 1) {
       dispatch(actions.setCurSongID(item.encodeId));
+      dispatch(actions.setPlaylist(null));
+      dispatch(actions.setAlbum(false));
     }
     if (item?.type === 4) {
       console.log(item);

@@ -3,21 +3,23 @@ import * as apis from "../apis";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import ListSong from "../components/ListSong";
-import List from "../components/List";
+import { useDispatch } from "react-redux";
+import * as actions from "../store/actions";
 
 function Album() {
-  const { title, pid } = useParams();
-  console.log({ title, pid });
+  const { pid } = useParams();
   const [playlistData, setPlaylistData] = useState({});
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const fetchDetailAlbum = async () => {
+      dispatch(actions.setLoading(true));
       const detailAlbum = await apis.apiGetDetailPlaylist("/detailplaylist", {
         id: pid,
       });
-      console.log({ dataAlbum: detailAlbum });
+      dispatch(actions.setLoading(false));
       if (detailAlbum?.err === 0) {
         setPlaylistData(detailAlbum?.data);
+        dispatch(actions.setPlaylist(detailAlbum?.data?.song?.items));
       }
     };
     fetchDetailAlbum();
@@ -31,10 +33,11 @@ function Album() {
           alt="thumbnailM"
           className="w-full object-contain rounded-md shadow-md"
         />
-        <h3 className="text-[20px] font-bold">{playlistData?.title}</h3>
+        <h3 className="text-[20px] font-bold flex text-center">
+          {playlistData?.title}
+        </h3>
         <span className="flex gap-2 items-center text-xs text-boderSecondary">
           <span>Cập nhật</span>
-
           <span>
             {moment.unix(playlistData?.contentLastUpdate).format("DD/MM/YY")}
           </span>
@@ -47,14 +50,11 @@ function Album() {
         )}k người yêu thích`}</span>
       </div>
       <div className="flex-auto ">
-        <div className="flex items-center text-sm text-textColor overflow-hidden text-ellipsis mb-[10px] text font-normal">
-          <span className="text-boderSecondary mr-2">Lời tựa </span>
+        <div className="text-sm text-textColor mb-[10px] font-normal">
+          <span className="text-boderSecondary mr-2">Lời tựa</span>
           <span>{playlistData?.description}</span>
         </div>
-        <ListSong
-          songs={playlistData?.song?.items}
-          totalDuration={playlistData?.song?.totalDuration}
-        />
+        <ListSong totalDuration={playlistData?.song?.totalDuration} />
       </div>
     </div>
   );

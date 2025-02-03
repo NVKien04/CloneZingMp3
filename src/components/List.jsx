@@ -2,12 +2,17 @@ import moment from "moment";
 import icons from "../Ultis/icon";
 import { useDispatch } from "react-redux";
 import * as actions from "../store/actions";
+import { memo } from "react";
 
 const { CiMusicNote1 } = icons;
 function List({ song }) {
+  // console.log(song);
   const dispatch = useDispatch();
   const handleClickSong = () => {
+    console.log(song);
     dispatch(actions.setCurSongID(song?.encodeId));
+    dispatch(actions.setPlaying(true));
+    dispatch(actions.setAlbum(true));
   };
   return (
     <div
@@ -41,4 +46,4 @@ function List({ song }) {
   );
 }
 
-export default List;
+export default memo(List);

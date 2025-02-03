@@ -1,12 +1,14 @@
 import icons from "../Ultis/icon";
 import List from "./List";
 import moment from "moment";
+import { shallowEqual, useSelector } from "react-redux";
+import React, { memo } from "react";
 
 const { TbSwitchVertical, BsDot } = icons;
 
-function ListSong({ songs, totalDuration }) {
-  console.log(songs, totalDuration);
-
+function ListSong({ totalDuration }) {
+  const { playlist } = useSelector((state) => state.music, shallowEqual);
+  const songs = playlist;
   return (
     <div className="">
       <div className="flex w-full items-center text-xs p-[10px] font-medium text-boderSecondary">
@@ -20,8 +22,8 @@ function ListSong({ songs, totalDuration }) {
         <div className="ml-[10px] grow-0 shrink-0 basis-auto">THỜI GIAN</div>
       </div>
       <div>
-        {songs?.map((item) => (
-          <List song={item} />
+        {songs?.map((item, index) => (
+          <List key={item?.encodeId || index} song={item} />
         ))}
       </div>
       <span className="mt-[16px] flex items-start text-boderSecondary text-[13px]">
@@ -35,4 +37,7 @@ function ListSong({ songs, totalDuration }) {
   );
 }
 
-export default ListSong;
+export default memo(
+  ListSong,
+  (prevProps, nextProps) => prevProps.totalDuration === nextProps.totalDuration
+);

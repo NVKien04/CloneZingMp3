@@ -23,3 +23,7 @@ export const getHome = () => async (dispatch) => {
     });
   }
 };
+export const setQueue = (flag) => ({
+  type: ActionType.SET_QUEUE,
+  flag,
+});
